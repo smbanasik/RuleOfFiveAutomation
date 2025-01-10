@@ -55,7 +55,7 @@ void write_empty_constructor_decl() {
 }
 
 void write_copy_constructor_decl() {
-    std::cout << class_name << "(" << class_name << "& other);\n";
+    std::cout << class_name << "(const " << class_name << "& other);\n";
 }
 void write_move_constructor_decl() {
     std::cout << class_name << "(" << class_name << "&& other) noexcept;\n";
@@ -65,7 +65,7 @@ void write_destructor_decl() {
 }
 
 void write_copy_constructor() {
-    std::cout << name_space << class_name << "(" << class_name << "& other)\n"
+    std::cout << name_space << class_name << "(const " << class_name << "& other)\n"
         << "    : ";
     std::span<std::string> span{ member_vars.begin(), member_vars.end() - 1};
 
@@ -76,7 +76,7 @@ void write_copy_constructor() {
 }
 
 void write_copy_assignment() {
-    std::cout << class_name << "& operator=(" << class_name << "& other) {\n"
+    std::cout << class_name << "& operator=(const" << class_name << "& other) {\n"
         << "    if (this == &other)\n        return *this;\n";
     for (auto member : member_vars) {
         std::cout << "    " << member << " = other." << member << ";\n";
