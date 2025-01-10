@@ -81,6 +81,7 @@ void write_copy_assignment() {
     for (auto member : member_vars) {
         std::cout << "    " << member << " = other." << member << ";\n";
     }
+    std::cout << "    return *this;\n;
     std::cout << "}\n";
 }
 
@@ -107,6 +108,7 @@ void write_move_assignment() {
     for (auto member : overwritten_vars) {
         std::cout << "    other." << member << " = nullptr;\n";
     }
+    std::cout << "    return *this;\n;
     std::cout << "}\n";
 }
 
