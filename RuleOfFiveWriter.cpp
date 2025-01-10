@@ -85,24 +85,24 @@ void write_copy_assignment() {
 }
 
 void write_move_constructor() {
-    std::cout << name_space << class_name << "(" << class_name << "& other) noexcept\n"
+    std::cout << name_space << class_name << "(" << class_name << "&& other) noexcept\n"
         << "    : ";
     std::span<std::string> span{ member_vars.begin(), member_vars.end() - 1 };
 
     for (auto member : span) {
-        std::cout << "    " << member << "(other." << member << "),\n";
+        std::cout << "    " << member << "(std::move(other." << member << ")),\n";
     }
-    std::cout << "    " << member_vars.back() << "(other." << member_vars.back() << ") {\n";
+    std::cout << "    " << member_vars.back() << "(std::move(other." << member_vars.back() << ")) {\n";
     for (auto member : overwritten_vars) {
         std::cout << "    other." << member << " = nullptr;\n";
     }
     std::cout << "}\n";
 }
 void write_move_assignment() {
-    std::cout << class_name << "& operator=(" << class_name << "& other) noexcept {\n"
+    std::cout << class_name << "& operator=(" << class_name << "&& other) noexcept {\n"
         << "    if (this == &other)\n        return;\n";
     for (auto member : member_vars) {
-        std::cout << "    " << member << " = other." << member << ";\n";
+        std::cout << "    " << member << " = std::move(other." << member << ");\n";
     }
     for (auto member : overwritten_vars) {
         std::cout << "    other." << member << " = nullptr;\n";
