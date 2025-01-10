@@ -77,7 +77,7 @@ void write_copy_constructor() {
 
 void write_copy_assignment() {
     std::cout << class_name << "& operator=(" << class_name << "& other) {\n"
-        << "    if (this == &other)\n        return;\n";
+        << "    if (this == &other)\n        return *this;\n";
     for (auto member : member_vars) {
         std::cout << "    " << member << " = other." << member << ";\n";
     }
@@ -101,7 +101,7 @@ void write_move_constructor() {
 }
 void write_move_assignment() {
     std::cout << class_name << "& operator=(" << class_name << "&& other) noexcept {\n"
-        << "    if (this == &other)\n        return;\n";
+        << "    if (this == &other)\n        return *this;\n";
     for (auto member : member_vars) {
         std::cout << "    " << member << " = std::move(other." << member << ");\n";
     }
